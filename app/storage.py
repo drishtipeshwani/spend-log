@@ -23,7 +23,7 @@ def write_private(path: Path, data: str | bytes) -> None:
     if isinstance(data, bytes):
         path.write_bytes(data)
     else:
-        path.write_text(data)
+        path.write_text(data, encoding="utf-8", newline="")  # UTF-8 everywhere (₹), no \r\n doubling on Windows
     os.chmod(path, 0o600)
 
 

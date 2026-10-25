@@ -33,10 +33,10 @@ class Profile:
 def load_profiles() -> list[Profile]:
     if not PROFILES_FILE.exists():
         return []
-    return [Profile(**p) for p in json.loads(PROFILES_FILE.read_text())]
+    return [Profile(**p) for p in json.loads(PROFILES_FILE.read_text(encoding="utf-8"))]
 
 
 def save_profiles(profiles: list[Profile]) -> None:
     PROFILES_FILE.parent.mkdir(parents=True, exist_ok=True)
-    PROFILES_FILE.write_text(json.dumps([asdict(p) for p in profiles], indent=2))
+    PROFILES_FILE.write_text(json.dumps([asdict(p) for p in profiles], indent=2), encoding="utf-8")
     os.chmod(PROFILES_FILE, 0o600)

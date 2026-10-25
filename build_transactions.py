@@ -75,7 +75,7 @@ def parse_statements(accounts: list[str], force: bool, txns: list[dict], stmts: 
     for account in accounts:
         dirs = AccountDirs.for_account(account)
         for meta_path in sorted(dirs.meta.glob("*.json")):
-            meta = json.loads(meta_path.read_text())
+            meta = json.loads(meta_path.read_text(encoding="utf-8"))
             sid = statement_id(meta)
             if sid in stmts and not force:
                 continue

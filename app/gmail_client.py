@@ -45,7 +45,7 @@ def token_path(account: str) -> Path:
 def _remembered_address(account: str) -> str:
     """The address this account signed in with before (see app/accounts.py)."""
     known = SECRETS_DIR / "accounts.json"
-    return json.loads(known.read_text()).get(account, "") if known.exists() else ""
+    return json.loads(known.read_text(encoding="utf-8")).get(account, "") if known.exists() else ""
 
 
 def get_credentials(account: str = "default", login_hint: str = "") -> Credentials:
@@ -82,7 +82,7 @@ def get_credentials(account: str = "default", login_hint: str = "") -> Credentia
             raise TimeoutError("Google sign-in didn't finish.")
 
     SECRETS_DIR.mkdir(exist_ok=True)
-    token_file.write_text(creds.to_json())
+    token_file.write_text(creds.to_json(), encoding="utf-8")
     os.chmod(token_file, 0o600)
     return creds
 

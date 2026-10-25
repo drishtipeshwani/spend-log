@@ -97,7 +97,7 @@ def load_forecast(stamp: tuple) -> tuple[pd.DataFrame, list[dict]]:
         for col in ("last_cycle", "avg_3", "forecast", "low", "high"):
             rows[col] = rows[col].astype(float)
         rows["person"] = rows["holder"].str.capitalize()
-    tips = json.loads(TIPS.read_text()) if TIPS.exists() else []
+    tips = json.loads(TIPS.read_text(encoding="utf-8")) if TIPS.exists() else []
     return rows, tips
 
 

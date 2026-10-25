@@ -34,7 +34,7 @@ Built for the [DEV Hacktoberfest Open-Source AI Challenge, Week 3: "Slow and Ste
 
 ### What you need
 
-- macOS or Linux with Python 3.11+ (developed on 3.14), 16 GB of RAM, and about 11 GB of free disk for the models (Gemma 9.5 GB, TabPFN 0.85 GB)
+- Windows, macOS or Linux with Python 3.11+, 16 GB of RAM, and about 11 GB of free disk for the models (Gemma 9.5 GB, TabPFN 0.85 GB). Built and tested on macOS with Python 3.14.
 - [Ollama](https://ollama.com)
 - A Google account, plus a Google Cloud project for Gmail access (free, one-time, about 15 minutes)
 
@@ -48,13 +48,23 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+On Windows (PowerShell), create and activate the environment like this instead:
+
+```powershell
+py -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+If PowerShell won't run the activation script, use Command Prompt and `.venv\Scripts\activate.bat` instead. The other commands below are the same on every system.
+
 ### 2. Get Gemma
 
 ```bash
 ollama pull gemma4:e4b
 ```
 
-Keep Ollama running while you use Spend Log. To try another model, set `SPEND_LOG_MODEL` (e.g. `SPEND_LOG_MODEL=gemma4:12b`).
+Keep Ollama running while you use Spend Log. To try another model, set `SPEND_LOG_MODEL`: `export SPEND_LOG_MODEL=gemma4:12b`, or in PowerShell `$env:SPEND_LOG_MODEL = "gemma4:12b"`.
 
 ### 3. Let Spend Log read Gmail
 
@@ -99,7 +109,7 @@ python download_statements.py --account mom --newer-than 180d
 - `secrets/`: the OAuth client, Gmail sign-ins, and family details (names and dates of birth, used only to work out passwords).
 - `data/`: downloaded and unlocked PDFs, extracted text, and the CSVs (`transactions.csv`, `statements.csv`, `merchants.csv`, `forecast.csv`).
 
-Both folders are gitignored, and files are written readable by you only.
+Both folders are gitignored. On macOS and Linux, files are written readable by you only.
 
 ### Command-line tools
 

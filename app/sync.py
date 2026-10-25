@@ -20,7 +20,7 @@ def _path(account: str):
 
 def _load(account: str) -> dict:
     path = _path(account)
-    return json.loads(path.read_text()) if path.exists() else {}
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
 
 
 def save(account: str, fetched_at: datetime, search: str) -> None:
@@ -39,7 +39,7 @@ def last_fetch(account: str, search: str) -> datetime | None:
 def latest_statement_date(account: str) -> date | None:
     """When the newest statement already on disk arrived, for searches that haven't been fetched yet."""
     dirs = AccountDirs.for_account(account)
-    dates = [json.loads(p.read_text()).get("received_on") for p in dirs.meta.glob("*.json")]
+    dates = [json.loads(p.read_text(encoding="utf-8")).get("received_on") for p in dirs.meta.glob("*.json")]
     dates = [d for d in dates if d]
     return date.fromisoformat(max(dates)) if dates else None
 

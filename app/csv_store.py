@@ -27,7 +27,7 @@ MERCHANT_FIELDS = ["key", "merchant", "category", "category_source"]
 def read_rows(path: Path) -> list[dict]:
     if not path.exists():
         return []
-    with path.open(newline="") as f:
+    with path.open(newline="", encoding="utf-8") as f:
         return list(csv.DictReader(f))
 
 

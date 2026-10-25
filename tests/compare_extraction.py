@@ -31,7 +31,7 @@ def key(t) -> tuple:
 def main() -> int:
     statements = [(d.unlocked / m["pdf"], m) for account in AccountDirs.accounts()
                   for d in [AccountDirs.for_account(account)]
-                  for m in (json.loads(p.read_text()) for p in sorted(d.meta.glob("*.json")))
+                  for m in (json.loads(p.read_text(encoding="utf-8")) for p in sorted(d.meta.glob("*.json")))
                   if reference_au_ixigo.matches(m) and (d.unlocked / m["pdf"]).exists()]
     if not statements:
         print("No unlocked AU Ixigo statements found.")

@@ -15,12 +15,12 @@ ACCOUNTS_FILE = SECRETS_DIR / "accounts.json"
 
 
 def _load() -> dict[str, str]:
-    return json.loads(ACCOUNTS_FILE.read_text()) if ACCOUNTS_FILE.exists() else {}
+    return json.loads(ACCOUNTS_FILE.read_text(encoding="utf-8")) if ACCOUNTS_FILE.exists() else {}
 
 
 def _save(data: dict[str, str]) -> None:
     SECRETS_DIR.mkdir(exist_ok=True)
-    ACCOUNTS_FILE.write_text(json.dumps(data, indent=2))
+    ACCOUNTS_FILE.write_text(json.dumps(data, indent=2), encoding="utf-8")
     os.chmod(ACCOUNTS_FILE, 0o600)
 
 
