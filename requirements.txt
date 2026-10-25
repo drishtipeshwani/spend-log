@@ -1,0 +1,7 @@
+google-api-python-client>=2.150
+google-auth-oauthlib>=1.2
+google-auth-httplib2>=0.2
+pdfplumber>=0.11
+pikepdf>=9.0
+streamlit>=1.66
+tabpfn>=9.0

@@ -1,0 +1,21 @@
+# Spend Log runs on your laptop only.
+[server]
+address = "localhost"   # use --server.address 0.0.0.0 to open it on your phone over home Wi-Fi
+headless = true
+
+[browser]
+gatherUsageStats = false   # no telemetry to Streamlit
+
+[client]
+toolbarMode = "minimal"   # hides the "Deploy" (to Streamlit cloud) button
+
+# Palette "sloth moss": moss #2F5D46, clay #C46A3C, sage #C9D8B6, paper #F3F1EA (see dashboard.py)
+[theme]
+base = "light"
+primaryColor = "#2F5D46"
+backgroundColor = "#F3F1EA"
+secondaryBackgroundColor = "#E9E6DA"
+textColor = "#1E2A22"
+borderColor = "#E2DFD2"
+baseRadius = "10px"
+font = "sans serif"

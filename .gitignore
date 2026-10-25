@@ -1,0 +1,21 @@
+# Secrets: OAuth client, tokens, card passwords. Never commit these.
+secrets/
+credentials.json
+token*.json
+
+# Local data (downloaded statements, CSVs)
+data/
+*.db
+*.sqlite
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# Local tool settings
+.claude/
+
+# OS
+.DS_Store
