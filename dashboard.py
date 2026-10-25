@@ -437,6 +437,10 @@ def back_button() -> None:
 txns, stmts = load(data_stamp())
 forecast_rows, forecast_tips = load_forecast(data_stamp())
 
+def _inbox(account: str) -> str:
+    return "My inbox" if account == "me" else f"{account.capitalize()}'s inbox"
+
+
 class FetchProgress(io.TextIOBase):
     """Turns what a fetch prints into a short checklist per inbox, as it happens. The full printout
     is kept for "Details". Reads the progress lines of download_statements.py, build_transactions.py
@@ -457,16 +461,17 @@ class FetchProgress(io.TextIOBase):
                 self._render()
         return len(s)
 
+    # Each label change passes expanded=True: st.status's update() without it collapses the box.
     def _feed(self, line: str) -> bool:
         if m := re.match(r"\[(.+?)\] Connecting to Gmail", line):
             self.current = self.inboxes[m[1]] = {"name": m[1], "emails": 0, "unlocked": 0, "locked": 0,
                                                   "to_read": 0, "read": 0, "reading": "", "phase": "checking"}
-            self.status.update(label=f"Checking {m[1].capitalize()}'s inbox...")
+            self.status.update(label=f"Checking {_inbox(m[1]).replace('My', 'my')}...", expanded=True)
             return True
         i = self.current
         if line.startswith("Forecasting"):
             self.forecast = "running"
-            self.status.update(label="Updating the forecast with TabPFN...")
+            self.status.update(label="Updating the forecast with TabPFN...", expanded=True)
         elif "tip(s) from" in line or "No tips" in line:
             self.forecast = "done"
         elif line.startswith("Forecast skipped"):
@@ -475,7 +480,7 @@ class FetchProgress(io.TextIOBase):
             return False
         elif m := re.match(r"Reading (\d+) new statement", line):
             i["phase"], i["to_read"] = "reading", int(m[1])
-            self.status.update(label=f"Reading {m[1]} statement(s) with Gemma...")
+            self.status.update(label=f"Reading {m[1]} statement(s) with Gemma...", expanded=True)
         elif m := re.match(r"\d{4}-\d{2}-\d{2}  (.+)$", line):
             if i["phase"] == "reading":
                 i["reading"] = m[1]
@@ -499,7 +504,7 @@ class FetchProgress(io.TextIOBase):
     def _render(self) -> None:
         out = []
         for i in self.inboxes.values():
-            out.append(f"**{i['name'].capitalize()}'s inbox**")
+            out.append(f"**{_inbox(i['name'])}**")
             if i["phase"] == "checking" and not i["emails"]:
                 out.append(":material/hourglass_top: Checking for statement emails since the last fetch")
             if i["emails"]:
